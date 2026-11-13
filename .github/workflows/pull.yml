@@ -1,9 +1,20 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 3 optimizations:
+# - [HIGH] Add pip dependency cache to "style" job
+# - [HIGH] Add pip dependency cache to "tests" job
+# - [MEDIUM] Add concurrency group to "pull.yml"
+# Estimated savings: ~8 min/run
+#
 name: Pull actions
 
 on:
   workflow_dispatch:
   pull_request:
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   validate:
     runs-on: "ubuntu-latest"
